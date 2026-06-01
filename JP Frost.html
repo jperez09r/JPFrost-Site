@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JP Frost — Author</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400;1,6..72,500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f3ece0;
+    --paper-2: #ece3d2;
+    --paper-edge: #e2d6bc;
+    --ink: #1b2030;
+    --ink-2: #2a3147;
+    --ink-mute: #5b6178;
+    --rule: #c7b994;
+    --rule-soft: #d8cbac;
+    --amethyst: #6e5aa3;
+    --amethyst-soft: #a695d0;
+    --ember: #b6552f;
+    --frost: #93b2c4;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.5), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 10% 100%, rgba(110,90,163,0.06), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 90% 80%, rgba(182,85,47,0.04), transparent 70%);
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.2  0 0 0 0 0.18  0 0 0 0 0.12  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+    z-index: 1;
+  }
+
+  /* Vignette */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none;
+    box-shadow: inset 0 0 200px rgba(60, 45, 20, 0.18);
+    z-index: 1;
+  }
+
+  main, header, footer, nav { position: relative; z-index: 2; }
+
+  .serif { font-family: "Newsreader", Georgia, serif; font-optical-sizing: auto; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  /* Top frame: nav + page number */
+  .top {
+    position: sticky; top: 0;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(243,236,224,0.92), rgba(243,236,224,0.78));
+    border-bottom: 1px solid var(--rule-soft);
+    z-index: 50;
+  }
+  .top-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+  }
+  .mark {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .mark .amp { color: var(--amethyst); font-weight: 400; }
+  .nav-links {
+    display: flex; gap: 28px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .nav-links a {
+    color: var(--ink-2);
+    text-decoration: none;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a:hover { color: var(--amethyst); }
+  .nav-links .num { color: var(--ink-mute); margin-right: 6px; opacity: 0.7; }
+
+  .folio {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.08em;
+  }
+
+  /* Container */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* HERO */
+  .hero {
+    padding: 88px 0 64px;
+    border-bottom: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: ""; flex: 0 0 36px; height: 1px; background: var(--rule);
+  }
+  .eyebrow::after { flex: 1; }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amethyst); display: inline-block; }
+
+  .display {
+    font-family: "Newsreader", serif;
+    font-weight: 400;
+    font-size: clamp(56px, 10vw, 148px);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    margin: 0;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .display .it { font-style: italic; font-weight: 300; color: var(--amethyst); }
+  .display .sm { font-size: 0.42em; font-style: italic; font-weight: 300; color: var(--ink-mute); display: block; margin-top: 22px; letter-spacing: -0.01em; }
+
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .meta-cell .k {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .meta-cell .v {
+    font-family: "Newsreader", serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .meta-cell .v.italic { font-style: italic; font-weight: 400; }
+  .meta-cell .v .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(110, 90, 163, 0.08);
+    color: var(--amethyst);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-family: "Instrument Sans", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .meta-cell .v .pill::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--amethyst);
+    box-shadow: 0 0 0 3px rgba(110,90,163,0.18);
+  }
+
+  /* BOOK SECTION */
+  section { padding: 96px 0; border-bottom: 1px solid var(--rule-soft); }
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: baseline;
+    margin-bottom: 56px;
+  }
+  .section-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .section-title {
+    font-family: "Newsreader", serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .section-title .it { font-style: italic; color: var(--amethyst); font-weight: 300; }
+
+  .book-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .book-grid > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .book-grid > div:first-child .cover {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Stylized book cover placeholder — abstract crystal shard */
+  .cover {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    background: linear-gradient(165deg, #1a2138 0%, #232b4a 45%, #2e2752 100%);
+    border-radius: 2px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 30px 60px -20px rgba(20, 15, 35, 0.55),
+      0 8px 24px -8px rgba(20, 15, 35, 0.35),
+      -4px 0 0 -2px rgba(0,0,0,0.12);
+    overflow: hidden;
+    transform: rotate(-1.2deg);
+    transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .cover:hover { transform: rotate(0deg) translateY(-4px); }
+  .cover-inner {
+    position: absolute; inset: 18px;
+    border: 1px solid rgba(214, 200, 160, 0.18);
+    padding: 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: #e8dec3;
+  }
+  .cover-top {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(232, 222, 195, 0.55);
+    display: flex; justify-content: space-between;
+  }
+  .cover-title {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #f0e6c8;
+    text-align: center;
+    padding: 0 6px;
+  }
+  .cover-title .accent { color: #c5b6e8; font-style: normal; font-weight: 400; display: block; font-size: 30px; }
+  .cover-title .sub { font-size: 13px; display:block; margin-top: 10px; color: rgba(232, 222, 195, 0.6); letter-spacing: 0.06em; font-style: normal; text-transform: uppercase; font-family: "JetBrains Mono", monospace; }
+  .cover-bottom {
+    text-align: center;
+    font-family: "Newsreader", serif;
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(232, 222, 195, 0.75);
+  }
+  .crystal-svg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .cover-spine {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0));
+  }
+  .cover-shine {
+    position: absolute; top: 0; bottom: 0; left: 18%;
+    width: 3px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0));
+    transform: rotate(-2deg);
+  }
+  .cover-caption {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-top: 22px;
+    text-align: center;
+  }
+
+  /* Pitch */
+  .pitch-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--amethyst);
+    margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pitch-tag .line { width: 28px; height: 1px; background: var(--amethyst); }
+  .pitch {
+    font-family: "Newsreader", serif;
+    font-size: 26px;
+    line-height: 1.42;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    text-wrap: pretty;
+    font-weight: 400;
+  }
+  .pitch .drop {
+    font-size: 64px;
+    line-height: 0.85;
+    font-weight: 500;
+    float: left;
+    margin: 8px 10px -2px 0;
+    color: var(--amethyst);
+    font-style: italic;
+  }
+  .pitch em { font-style: italic; color: var(--ink-2); }
+
+  .book-meta {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 24px;
+  }
+  .book-meta > div { padding-right: 24px; border-right: 1px solid var(--rule-soft); }
+  .book-meta > div:last-child { border-right: 0; padding-right: 0; padding-left: 0; }
+  .book-meta > div:not(:first-child) { padding-left: 24px; }
+  .book-meta .k {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .book-meta .v {
+    font-family: "Newsreader", serif;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .portrait {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px var(--rule-soft),
+      0 24px 50px -24px rgba(20, 15, 35, 0.35);
+    background: var(--paper-2);
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portrait::after {
+    content: ""; position: absolute; inset: 0;
+    box-shadow: inset 0 0 60px rgba(120, 90, 40, 0.08);
+    pointer-events: none;
+  }
+  .portrait-caption {
+    margin-top: 14px;
+    text-align: center;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    color: var(--ink-mute);
+    font-size: 13px;
+  }
+
+  .bio p {
+    font-family: "Newsreader", serif;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 22px;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+  .bio p:first-child::first-letter {
+    font-family: "Newsreader", serif;
+    font-size: 4em;
+    line-height: 0.85;
+    float: left;
+    padding: 4px 10px 0 0;
+    color: var(--amethyst);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .bio .marginalia {
+    margin-top: 36px;
+    padding: 18px 22px;
+    border-left: 2px solid var(--amethyst-soft);
+    background: rgba(110, 90, 163, 0.04);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .bio .marginalia .lbl { color: var(--amethyst); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; display: block; margin-bottom: 6px; }
+
+  /* NEWS / JOURNAL */
+  .news {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .entry {
+    padding: 32px 28px 32px 0;
+    border-right: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  .entry:nth-child(2) { padding-left: 28px; }
+  .entry:nth-child(3) { padding-left: 28px; padding-right: 0; border-right: 0; }
+  .entry .date {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+    display: flex; justify-content: space-between;
+  }
+  .entry .date .tag { color: var(--amethyst); }
+  .entry .title {
+    font-family: "Newsreader", serif;
+    font-size: 24px;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .entry .title .it { font-style: italic; font-weight: 400; }
+  .entry .body {
+    font-family: "Newsreader", serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0 0 18px;
+  }
+  .entry .more {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--amethyst);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(110, 90, 163, 0.3);
+    padding-bottom: 2px;
+  }
+  .entry .more:hover { border-bottom-color: var(--amethyst); }
+
+  /* Progress bar in first entry */
+  .progress {
+    margin: 14px 0 18px;
+  }
+  .progress .bar {
+    height: 6px; background: rgba(110, 90, 163, 0.12);
+    border-radius: 999px; overflow: hidden;
+  }
+  .progress .fill {
+    height: 100%;
+    width: 68%;
+    background: linear-gradient(90deg, var(--amethyst), var(--amethyst-soft));
+    border-radius: 999px;
+  }
+  .progress .row {
+    display: flex; justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .progress .row .num { color: var(--ink); }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 80px;
+  }
+  .contact-intro h3 {
+    font-family: "Newsreader", serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 0 0 18px;
+    letter-spacing: -0.015em;
+    max-width: 22ch;
+  }
+  .contact-intro h3 .it { font-style: italic; color: var(--amethyst); }
+  .contact-intro p {
+    font-family: "Newsreader", serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 42ch;
+    margin: 0 0 28px;
+  }
+  .contact-list {
+    list-style: none; padding: 0; margin: 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .contact-list li {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .contact-list li .k { color: var(--ink-mute); }
+  .contact-list li .v { color: var(--ink); }
+  .contact-list li .v.muted { color: var(--ink-mute); font-style: italic; text-transform: none; letter-spacing: 0.02em; font-family: "Newsreader", serif; font-size: 14px; }
+
+  /* Form */
+  .form {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--rule-soft);
+    padding: 36px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .form::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amethyst-soft), transparent);
+    opacity: 0.6;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .form-field { display: flex; flex-direction: column; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+    display: flex; justify-content: space-between;
+  }
+  .form-field label .req { color: var(--amethyst); }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: "Newsreader", serif;
+    font-size: 17px;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 0;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-field textarea {
+    resize: vertical;
+    min-height: 110px;
+    border: 1px solid var(--rule);
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.3);
+    line-height: 1.5;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--amethyst);
+  }
+  .form-field.error input,
+  .form-field.error textarea,
+  .form-field.error select {
+    border-color: var(--ember);
+  }
+  .form-field .err {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ember);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+  .form-field select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M0 0l5 6 5-6' fill='none' stroke='%231b2030' stroke-width='1'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 22px;
+  }
+  .submit {
+    margin-top: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px;
+  }
+  .submit .hint {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-mute);
+  }
+  .btn {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn:hover { background: var(--amethyst); }
+  .btn:active { transform: translateY(1px); }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .sent {
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .sent .seal {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--amethyst);
+    color: var(--paper);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-size: 28px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 0 1px var(--amethyst), 0 0 0 6px rgba(110,90,163,0.12);
+  }
+  .sent h4 {
+    font-family: "Newsreader", serif;
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .sent h4 .it { font-style: italic; }
+  .sent p {
+    font-family: "Newsreader", serif;
+    color: var(--ink-mute);
+    font-size: 15px;
+    margin: 0;
+  }
+  .sent button {
+    margin-top: 22px;
+    background: transparent;
+    color: var(--amethyst);
+    border: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    cursor: pointer;
+    border-bottom: 1px solid var(--amethyst);
+    padding: 2px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 0 40px;
+    background: transparent;
+  }
+  .colophon {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .colophon .center {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-2);
+  }
+  .colophon .center .ornament { color: var(--amethyst); padding: 0 8px; }
+  .colophon .right { text-align: right; }
+
+  /* Single-entry Field Notes — collapses gracefully when only one card is present */
+  .news:has(.entry:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 660px;
+  }
+  .news:has(.entry:only-child) .entry {
+    padding: 32px 0;
+    border-right: 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .wrap { padding: 0 20px; }
+    .top-inner { padding: 12px 20px; }
+    .hero { padding: 56px 0 48px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .section-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 36px; }
+    section { padding: 64px 0; }
+    .book-grid { grid-template-columns: 1fr; gap: 48px; }
+    .cover { max-width: 280px; margin: 0 auto; }
+    .book-meta { grid-template-columns: 1fr; }
+    .book-meta > div { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 14px 0 !important; }
+    .book-meta > div:last-child { border-bottom: 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .portrait { max-width: 240px; }
+    .news { grid-template-columns: 1fr; }
+    .entry { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 28px 0 !important; }
+    .entry:last-child { border-bottom: 0; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .form-row { grid-template-columns: 1fr; }
+    .colophon { grid-template-columns: 1fr; gap: 12px; text-align: center; }
+    .colophon .right { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-inner">
+    <div class="mark">JP <span class="amp">·</span> Frost</div>
+    <nav class="nav-links">
+      <a href="#book"><span class="num">01</span>The Book</a>
+      <a href="#about"><span class="num">02</span>Author</a>
+      <a href="#news"><span class="num">03</span>Field Notes</a>
+      <a href="#contact"><span class="num">04</span>Contact</a>
+    </nav>
+    <div class="folio">MS · 2026</div>
+  </div>
+</div>
+
+<main>
+
+<header class="hero" data-screen-label="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Manuscript complete · in final revision · query-ready</div>
+    <h1 class="display">
+      JP Frost
+      <span class="sm">writes literary fantasy about <span class="it">hidden bloodlines, quiet resistance, and the long winter of an empire that names what it cannot let live.</span></span>
+    </h1>
+
+    <div class="hero-meta">
+      <div class="meta-cell">
+        <div class="k">Current Project</div>
+        <div class="v italic">Crystalus Beta:<br/>The Pale Lycrux Legend</div>
+      </div>
+      <div class="meta-cell">
+        <div class="k">Status</div>
+        <div class="v"><span class="pill">Manuscript · final revision</span></div>
+      </div>
+      <div class="meta-cell">
+        <div class="k">Representation</div>
+        <div class="v italic">Open to query — seeking agents in adult literary fantasy</div>
+      </div>
+      <div class="meta-cell">
+        <div class="k">Form</div>
+        <div class="v">Novel · ~118k words · Standalone with series potential</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="book" data-screen-label="book">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">— 01 / The Book</div>
+      <h2 class="section-title">An elevator pitch, <span class="it">for the patient reader.</span></h2>
+    </div>
+
+    <div class="book-grid">
+      <div>
+        <div class="cover">
+          <img src="assets/front-cover.png" alt="Crystalus Beta: The Pale Lycrux Legend — cover art" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
+      </div>
+
+      <div>
+        <div class="pitch-tag"><span class="line"></span> Logline</div>
+        <p class="pitch">
+          <span class="drop">A</span>t the edge of an empire that catalogues every wielder it can find, a winter province has learned to hide its own. The shards inherited there are kept dormant; the bloodlines are kept quiet; the children are taught a third law before they are taught the first two — <em>don't be remembered.</em> But the empire is patient, and a single anomaly at a checkpoint is enough to turn a name into a number. <em>Crystalus Beta</em> is a novel about what survives when concealment fails — the quiet resistance doing the slow work of catching the ones the cataloguers find first, the inheritance that arrives whether you ask for it or not, and the older question waiting underneath: whether what an empire wants to use and what it wants to erase were ever different things.
+        </p>
+
+        <div class="book-meta">
+          <div>
+            <div class="k">Genre</div>
+            <div class="v">Literary fantasy · secondary world</div>
+          </div>
+          <div>
+            <div class="k">Comp Titles</div>
+            <div class="v"><em>Jade City</em> meets <em>The Jasmine Throne</em>, with the patience of <em>The Fifth Season</em></div>
+          </div>
+          <div>
+            <div class="k">Themes</div>
+            <div class="v">Discipline · resistance · what answers when you call it</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" data-screen-label="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">— 02 / The Author</div>
+      <h2 class="section-title">JP Frost, <span class="it">in his own words.</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <div class="portrait">
+          <img src="assets/jp-frost-avatar.png" alt="JP Frost — illustrated portrait" />
+        </div>
+        <div class="portrait-caption">Self-portrait · illustrated</div>
+      </div>
+      <div class="bio">
+        <p>JP Frost writes under a pen name and keeps the rest deliberately vague. By day he works as an application engineer — mapping problems, architecting solutions, building systems that have to actually hold under load — and brings the same instincts to fiction: structure first, payoff earned, every piece doing real work. He writes in fragments wherever he happens to be, on transit and between meetings and in margins, and lets the longer hours of the week shape those fragments into something with a spine. Before the novel there were years of poems, and before the poems there was a story he tried to make into a game in middle school. <em>Crystalus Beta</em> is the version of that story he finally had the patience to tell.</p>
+        <p>He is drawn to stories with a long horizon — worlds large enough to disappear into, faction politics with no easy sides, characters whose growth is measured in seasons rather than scenes. He grew up on epics from every medium that took their worldbuilding seriously, and on serialized storytelling that trusted its audience to wait. He cares about structure: a setup that earns its turn, a turn that earns its cost, a cost that earns the next book. He wants to write the kind of story he would line up to read.</p>
+        <p>He is currently unrepresented, and is open to query from literary agents working in adult fantasy.</p>
+
+        <div class="marginalia">
+          <span class="lbl">// Marginalia</span>
+          On the desk: a phone full of notes caught on the move, a laptop where they become a chapter ladder, and a small crowd of figures from the stories that raised me, keeping watch.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="news" data-screen-label="news">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">— 03 / Field Notes</div>
+      <h2 class="section-title">Dispatches from <span class="it">the desk.</span></h2>
+    </div>
+
+    <!-- TODO: adjust layout so a single entry doesn't read as a broken grid (center the card or switch to single-column) -->
+    <div class="news">
+      <article class="entry">
+        <div class="date"><span>2026</span><span class="tag">// introduction</span></div>
+        <h3 class="title">A note before the book</h3>
+        <p class="body">This is a pre-publication site for a debut novel that is finished. There are no preorder links, no merchandise, no newsletter waiting to catch your email on the way out. What there is: a book — <em>Crystalus Beta: The Pale Lycrux Legend</em> — a standalone adult literary fantasy with room to grow into a series, and an open invitation to literary agents working in the space.</p>
+        <p class="body">I'll post here when there's something real to say — a note on craft, a turn in the work, a thing worth marking. Not often, and never for the sake of it. If you're an agent, the contact page has what you need. If you're a reader who wandered in early: welcome. The door was left open on purpose.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact" data-screen-label="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">— 04 / Correspondence</div>
+      <h2 class="section-title">Send a letter, <span class="it">not a tweet.</span></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <h3>For agents, editors, friends, and the <span class="it">occasional kind stranger.</span></h3>
+        <p>I read everything that arrives here. If you're an agent reviewing queries, that's exactly who this page is for — the full manuscript and synopsis are available on request.</p>
+        <ul class="contact-list">
+          <!-- TODO: replace with real address once mailbox is created -->
+          <li><span class="k">Email</span><span class="v">hello@jpfrost.ink</span></li>
+          <li><span class="k">Representation</span><span class="v muted">currently unrepresented</span></li>
+        </ul>
+      </div>
+
+      <!-- TODO: wire to Formspree (or chosen backend) and point at real email before launch -->
+      <div id="form-root"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="colophon">
+      <div class="left">© 2026 · JP Frost</div>
+      <div class="center">Crystalus Beta <span class="ornament">✦</span> a debut novel</div>
+      <div class="right">Just a manuscript, for now.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+const { useState } = React;
+
+function ContactForm() {
+  const [form, setForm] = useState({ name: "", email: "", role: "Reader", subject: "", message: "" });
+  const [errors, setErrors] = useState({});
+  const [notActive, setNotActive] = useState(false);
+
+  const setField = (k, v) => {
+    setForm(f => ({ ...f, [k]: v }));
+    if (errors[k]) setErrors(e => ({ ...e, [k]: undefined }));
+  };
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = "Required — what shall I call you?";
+    if (!form.email.trim()) e.email = "Required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "That doesn't look like an email.";
+    if (!form.message.trim()) e.message = "A blank letter is just paper.";
+    else if (form.message.trim().length < 12) e.message = "A little longer, please — twelve characters at least.";
+    return e;
+  };
+
+  // TODO: wire to Formspree (or chosen backend) before launch — do not restore fake success state
+  const submit = (ev) => {
+    ev.preventDefault();
+    const e = validate();
+    setErrors(e);
+    if (Object.keys(e).length) return;
+    setNotActive(true);
+  };
+
+  if (notActive) {
+    return (
+      <div className="form sent">
+        <div className="seal" style={{background: "var(--ink-mute)"}}>!</div>
+        <h4>Form <span className="it">not yet active.</span></h4>
+        <p>This contact form is not yet connected — your message was not sent. Check back soon.</p>
+        <button onClick={() => setNotActive(false)}>← Back to form</button>
+      </div>
+    );
+  }
+
+  const Field = ({ id, label, required, children }) => (
+    <div className={"form-field" + (errors[id] ? " error" : "")}>
+      <label htmlFor={id}>
+        <span>{label}</span>
+        {required && <span className="req">required</span>}
+      </label>
+      {children}
+      {errors[id] && <div className="err">↳ {errors[id]}</div>}
+    </div>
+  );
+
+  return (
+    <form className="form" onSubmit={submit} noValidate>
+      <div className="form-row">
+        <Field id="name" label="Your name" required>
+          <input id="name" type="text" value={form.name} onChange={e => setField("name", e.target.value)} placeholder="e.g. A. Le Guin" />
+        </Field>
+        <Field id="email" label="Email" required>
+          <input id="email" type="email" value={form.email} onChange={e => setField("email", e.target.value)} placeholder="you@somewhere.ink" />
+        </Field>
+      </div>
+
+      <div className="form-row">
+        <Field id="role" label="You are a…">
+          <select id="role" value={form.role} onChange={e => setField("role", e.target.value)}>
+            <option>Reader</option>
+            <option>Literary agent</option>
+            <option>Editor / publisher</option>
+            <option>Journalist / reviewer</option>
+            <option>Fellow writer</option>
+            <option>Other</option>
+          </select>
+        </Field>
+        <Field id="subject" label="Subject">
+          <input id="subject" type="text" value={form.subject} onChange={e => setField("subject", e.target.value)} placeholder="Optional — a line of weather" />
+        </Field>
+      </div>
+
+      <div className="form-row">
+        <div className="form-field full">
+          <Field id="message" label="Your letter" required>
+            <textarea id="message" rows="5" value={form.message} onChange={e => setField("message", e.target.value)} placeholder="Begin wherever you like. There is no hurry." />
+          </Field>
+        </div>
+      </div>
+
+      <div className="submit">
+        <span className="hint">↳ I read every one. Replies vary in season.</span>
+        <button type="submit" className="btn">
+          Send letter <span className="arrow">→</span>
+        </button>
+      </div>
+    </form>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("form-root")).render(<ContactForm />);
+</script>
+
+</body>
+</html>
